@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="D:\D\Project\Java\workspace-sts-3.9.5.RELEASE\mybatis\mybatis-generator-cmd\mysql-connector-java-8.0.13.jar" />
+		
+	<context id="context1" targetRuntime="Mybatis3">
+	
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true"/>
+		</commentGenerator>
+		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/dt_mybatis?serverTimezone=UTC"
+			userId="root" password="123456">
+		</jdbcConnection>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<javaModelGenerator  targetPackage="cn.bluemobi.entity"
+			targetProject="D:\D\Project\Java\workspace-sts-3.9.5.RELEASE\mybatis\mybatis-generator-cmd\src" />
+		<sqlMapGenerator targetPackage="cn.bluemobi.service"
+			targetProject="D:\D\Project\Java\workspace-sts-3.9.5.RELEASE\mybatis\mybatis-generator-cmd\src" />
+		<javaClientGenerator targetPackage="cn.bluemobi.service.impl"
+			targetProject="D:\D\Project\Java\workspace-sts-3.9.5.RELEASE\mybatis\mybatis-generator-cmd\src" type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table tableName="computers" domainObjectName="Computer" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+
+
+	</context>
+
+
+</generatorConfiguration>

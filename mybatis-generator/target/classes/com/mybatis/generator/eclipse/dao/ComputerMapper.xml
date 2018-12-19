@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.generator.eclipse.dao.impl.ComputerMapper">
+  <resultMap id="BaseResultMap" type="com.mybatis.generator.eclipse.entities.Computer">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="compute_name" jdbcType="VARCHAR" property="computeName" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="runMem" jdbcType="INTEGER" property="runmem" />
+    <result column="price" jdbcType="REAL" property="price" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    Id, compute_name, brand, runMem, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from computers
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from computers
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mybatis.generator.eclipse.entities.Computer">
+    insert into computers (Id, compute_name, brand, 
+      runMem, price)
+    values (#{id,jdbcType=INTEGER}, #{computeName,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+      #{runmem,jdbcType=INTEGER}, #{price,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mybatis.generator.eclipse.entities.Computer">
+    insert into computers
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="computeName != null">
+        compute_name,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="runmem != null">
+        runMem,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="computeName != null">
+        #{computeName,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="runmem != null">
+        #{runmem,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mybatis.generator.eclipse.entities.Computer">
+    update computers
+    <set>
+      <if test="computeName != null">
+        compute_name = #{computeName,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="runmem != null">
+        runMem = #{runmem,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=REAL},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mybatis.generator.eclipse.entities.Computer">
+    update computers
+    set compute_name = #{computeName,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      runMem = #{runmem,jdbcType=INTEGER},
+      price = #{price,jdbcType=REAL}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
