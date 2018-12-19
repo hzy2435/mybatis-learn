@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.one2many.dao.impl.One2ManyDaoImpl">
+
+	<resultMap type="com.mybatis.one2many.entities.User"
+		id="result">
+		<id property="id" javaType="Long" column="id" />
+		<result property="uUsername" javaType="String"
+			column="u_username" />
+		<result property="uPassword" javaType="String"
+			column="u_password" />
+		<collection property="itemList"
+			ofType="com.mybatis.one2many.entities.Item">
+			<result property="id" javaType="Long" column="id" />
+			<result property="itemName" javaType="String"
+				column="item_name" />
+			<result property="itemPrice" javaType="Float"
+				column="item_price" />
+		</collection>
+	</resultMap>
+
+	<select id="selectUserItems" resultMap="result">
+		SELECT * FROM users u
+		INNER JOIN items i
+		ON u.id = i.user_id
+	</select>
+
+	<insert id="insertUser"
+		parameterType="com.mybatis.one2many.entities.User" keyProperty="id"
+		useGeneratedKeys="true">
+		INSERT INTO users(u_username, u_password)
+		VALUES(#{uUsername}, #{uPassword})
+	</insert>
+	
+	<insert id="getId" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO users(u_username, u_password)
+		VALUES("hyz", "12841")
+	</insert>
+
+</mapper>

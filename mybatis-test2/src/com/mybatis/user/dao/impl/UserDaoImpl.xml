@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.user.dao.impl.UserDaoImpl">
+
+	<!-- sql 标签可以定义多个语句的公共部分 -->
+	<sql id="commonField">
+		u_username, u_password
+	</sql>
+
+	<select id="selectAll" resultType="Map">
+		SELECT
+		<include refid="commonField"/>
+		FROM users
+	</select>
+	
+	<select id="selectByParams" resultType="Map" parameterType="Map">
+		SELECT
+		<include refid="commonField"/>
+		FROM users WHERE u_username = #{username}
+	</select>
+	
+	<!-- 动态sql查询: 
+		小于:  &lt;
+		大于:  &gt;
+	-->
+	<select id="selectComputesByDynatic" resultType="Map" parameterType="Map">
+		SELECT * FROM computers
+		<where>
+			<if test="computerName!=null">
+				compute_name = #{computerName}
+			</if>
+			<if test="brand!=null">
+				AND brand = #{brand}
+			</if>
+			<if test="runMem!=null">
+				AND runMem = #{runMem}
+			</if>
+			<if test="price!=null">
+				AND price &lt;= #{price}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 
+	 if ... else
+	 -->
+	<select id="testIfElse" parameterType="Map" resultType="Map">
+		<choose>
+			<when test="type == 1">
+				SELECT <include refid="commonField"/> FROM users
+			</when>
+			<otherwise>
+				SELECT * FROM computers
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 动态更新 -->
+	<update id="dynaticUpdate" parameterType="Map">
+		UPDATE computers
+		<set>
+			<if test="computerName != null">
+				compute_name = #{computerName},
+			</if>
+			<if test="brand != null">
+				brand = #{brand},
+			</if>
+			<if test="runMem != null">
+				runMem = #{runMem},
+			</if>
+			<if test="price != null">
+				price = #{price}
+			</if>
+			
+			<!-- 解决当所有字段为空时报错的情况 -->
+			id = #{id}
+			
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

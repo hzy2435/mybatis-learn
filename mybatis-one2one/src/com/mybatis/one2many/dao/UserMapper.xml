@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.one2many.dao.UserMapper">
+	<resultMap id="BaseResultMap"
+		type="com.mybatis.one2many.entities.User">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="u_username" jdbcType="VARCHAR"
+			property="uUsername" />
+		<result column="u_password" jdbcType="VARCHAR"
+			property="uPassword" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, u_username, u_password
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from users
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from users
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert"
+		parameterType="com.mybatis.one2many.entities.User">
+		<selectKey keyProperty="id" order="AFTER"
+			resultType="java.lang.Long">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into users (u_username, u_password)
+		values (#{uUsername,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.mybatis.one2many.entities.User">
+		<selectKey keyProperty="id" order="AFTER"
+			resultType="java.lang.Long">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into users
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="uUsername != null">
+				u_username,
+			</if>
+			<if test="uPassword != null">
+				u_password,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="uUsername != null">
+				#{uUsername,jdbcType=VARCHAR},
+			</if>
+			<if test="uPassword != null">
+				#{uPassword,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.mybatis.one2many.entities.User">
+		update users
+		<set>
+			<if test="uUsername != null">
+				u_username = #{uUsername,jdbcType=VARCHAR},
+			</if>
+			<if test="uPassword != null">
+				u_password = #{uPassword,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.mybatis.one2many.entities.User">
+		update users
+		set u_username = #{uUsername,jdbcType=VARCHAR},
+		u_password = #{uPassword,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<resultMap id="BaseResultMap"
+		type="com.mybatis.one2many.entities.User">
+		<result column="USER" jdbcType="CHAR" property="user" />
+		<result column="CURRENT_CONNECTIONS" jdbcType="BIGINT"
+			property="currentConnections" />
+		<result column="TOTAL_CONNECTIONS" jdbcType="BIGINT"
+			property="totalConnections" />
+	</resultMap>
+	<insert id="insert"
+		parameterType="com.mybatis.one2many.entities.User">
+		insert into users (USER, CURRENT_CONNECTIONS, TOTAL_CONNECTIONS
+		)
+		values (#{user,jdbcType=CHAR}, #{currentConnections,jdbcType=BIGINT},
+		#{totalConnections,jdbcType=BIGINT}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.mybatis.one2many.entities.User">
+		insert into users
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="user != null">
+				USER,
+			</if>
+			<if test="currentConnections != null">
+				CURRENT_CONNECTIONS,
+			</if>
+			<if test="totalConnections != null">
+				TOTAL_CONNECTIONS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="user != null">
+				#{user,jdbcType=CHAR},
+			</if>
+			<if test="currentConnections != null">
+				#{currentConnections,jdbcType=BIGINT},
+			</if>
+			<if test="totalConnections != null">
+				#{totalConnections,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+</mapper>

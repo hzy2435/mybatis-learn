@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.user.dao.imp.UserDaoImpl">
+	<select id="selectAll" resultType="com.mybatis.user.entity.User">
+		SELECT id id, u_username userName, u_password password FROM users
+	</select>
+	
+	<select id="selectAll2" resultType="Map">
+		SELECT * FROM users
+	</select>
+	
+	<select id="selectById" resultType="Map" parameterType="Long">
+		SELECT * FROM users WHERE id = #{0}
+	</select>
+	
+	<!-- <select id="selectByParams" resultType="Map" parameterType="Map">
+		SELECT * FROM users WHERE u_username = '${username}' AND u_password = '${password}'
+	</select> -->
+	
+	<select id="selectByParams" resultType="Map" parameterType="Map">
+		SELECT * FROM users WHERE u_username = #{username} AND u_password = #{password}
+	</select>
+	
+	<select id="selectByParams2" resultType="Map" parameterType="User">
+		SELECT * FROM users WHERE u_username = #{userName} AND u_password = #{password}
+	</select>
+	
+	<!-- 使用 '$' 模糊查询 -->
+	<select id="selectByParams3" resultType="Map" parameterType="Map">
+		SELECT * FROM users WHERE u_password LIKE '%${password}%';
+	</select>
+	
+	<!-- 使用 '#' 模糊查询 -->
+	<select id="selectByParams4" resultType="Map" parameterType="Map">
+		SELECT * FROM users WHERE u_password LIKE CONCAT('%', #{password}, '%')
+	</select>
+	
+	<!-- insert, update, delete 标签没有 resultType 属性, 默认返回值为 int -->
+	<insert id="addUser" parameterType="Map">
+		INSERT INTO users(u_username, u_password) VALUES(#{username}, #{password})
+	</insert>
+	<update id="updateUser" parameterType="Map">
+		UPDATE users SET u_password = #{password} WHERE u_username = #{username}
+	</update>
+	<delete id="deleteUser" parameterType="Map">
+		DELETE FROM users WHERE u_username = #{username}
+	</delete>
+	
+</mapper>

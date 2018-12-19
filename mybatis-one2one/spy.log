@@ -1,0 +1,4 @@
+1545179464791|0|statement|connection 0|INSERT INTO users(u_username, u_password) 		VALUES("hyz", "12841")|INSERT INTO users(u_username, u_password) 		VALUES("hyz", "12841")
+1545179464822|31|commit|connection 0||
+1545179531894|0|statement|connection 0|INSERT INTO users(u_username, u_password) 		VALUES(?, ?)|INSERT INTO users(u_username, u_password) 		VALUES('username', 'password')
+1545179531941|31|commit|connection 0||
